@@ -11,242 +11,191 @@ import java.util.Scanner;
  *
  * @author Albert Charry, Jorge Andres Duran
  */
-public class Ejecutable  {// esta clase va ser la padre
-    Electrodomestico lista[]=new Electrodomestico[10]; //se declara y se da el tamaño del array          
-    double sumaElectrodomesticos=0;//se declaran las variables globales
-    double sumaTelevisores=0;
-    double sumaLavadoras=0;
-    Scanner entrada =  new Scanner (System.in);//scanner para hacer el guardado
+public class Ejecutable  {// clase padre
     
-    public void Llenarlista(){   
-        
+        Electrodomestico lista[]= new Electrodomestico[10]; //donde se van guardara cada electrodomesticos       
+    double sumaElectrodomesticos=0; // un contador para la suma de electrodomesticos
+    double sumaTelevisores=0; // contador para el televisores en total
+    double sumaLavadoras=0; // contador para los lavadoras en total
+    Scanner entrada =  new Scanner (System.in);// para hacer el guardado de variables
     
-    }
-  
-    public void guardarLista(){
-        
-       int i=0; 
-       Electrodomestico electrodomestico =  new Electrodomestico(); 
-       
-       for(i=0;i<lista.length;i++){              
+    private Electrodomestico eletro;
+    
+    
 
-       lista[i]=electrodomestico;
-       }
-       if(i<=10){
+    public void recorerLiista(){//donde se hace el guardado de los eletrodomesticos
+        for(int i=0;i<lista.length;i++){
+            if(lista[i] instanceof Electrodomestico){//operador instanceof para comprobar si el objeto es una clase concreta
+                sumaElectrodomesticos+=lista[i].precioFinal();
+            }if(lista[i] instanceof Lavadora){//operador instanceof para comprobar si el objeto es una clase concreta
+                sumaLavadoras+=lista[i].precioFinal();
+            }if(lista[i] instanceof Televisor){//operador instanceof para comprobar si el objeto es una clase concreta
+                sumaTelevisores+=lista[i].precioFinal();
+            }
        
-       
-       }
+        }
     }
-    
-    public void ResultadosMenu(){
-        guardarLista();
+ //
+    public void ResultadosMenu(){//resultadp tolales
+        recorerLiista(); // llama el metodo para imprimir
         System.out.println("La suma del precio de los electrodomesticos es de "+sumaElectrodomesticos);
         System.out.println("La suma del precio de las lavadoras es de "+sumaLavadoras);
         System.out.println("La suma del precio de las televisiones es de "+sumaTelevisores);
    
     }
-    public void Menu(){// menu principal para seleccionar el tipo electrodomestico que desee
-        int desicion = -1;//se inicia el while el cual permite estar en el menu
-        while(desicion !=0){
+   
+    public void Menu(){// metodo del menu principal
+        int desicion;
+        for(int i=0; i<=10;i++){
             System.out.println("....Bienvenido...\nElectrodimestico a Seleccionar");
-            System.out.println("1. Electrodomestico General \n2. Lavadora \n3. Televisor \n0. Salir ");
-            desicion = entrada.nextInt();
-            switch(desicion){//un swicht para las opciones que desea entrar
-                case 0://encaso de si desea salir del menu o terminar el programa
-                    System.out.println("Garcias...");
-                    break;
-                case 1:
-                    MenuElectrodomesticoGeneral();//se llama a la funcion del menu electrodomestico
-                    break;
-                case 2:
-                     MenuLavadora();//se llama a la funcion menu del lavadora
-                    break;
-                case 3: 
-                    MenuTelevisor();//se llama a la funcion menu del Televiso
-                    break;
-                default: // en caso de no ingresar un valor dentro de las opciones que estan 
-                    System.out.println("No esta dentros de las opciones...\n"
-                            + "Intenta de nuevo\n");
-            }
+            System.out.println("1. Lavadora \n2. Televisor \n3. Resutados");
+            desicion = entrada.nextInt();// guarda la la opcion
+            if(desicion==1){// dependiendo de la opcion hace el llamado y el guardado de la posicion
+                MenuLavadora();
+                lista[i]= eletro;                
+            }if(desicion==2){
+                MenuTelevisor();
+                lista[i]=  eletro;
+            }if(desicion==3){
+                ResultadosMenu();
+                System.out.println("Gracias....");
+                break;
+            }if(desicion>3){
+                System.out.println("No esta dentro de las opciones...");
+            }           
+         
+         
         }
-    }
-    public void MenuElectrodomesticoGeneral(){// menu principal para seleccionar del electrodomestico que desee
-        int desicion = -1;//se inicia el while el cual permite estar en el menu
-        while(desicion !=0){
-            System.out.println("Menu Electrodomestico Genral\n Elige una Opcion");
-            System.out.println("1. Por Defecto \n2. Precio Base Y Peso"
-                    + " \n3. Precio Bese, Peso, Consumo Energetico Y Color \n0. Salir ");
-            desicion = entrada.nextInt();
-            switch(desicion){//un swicht para las opciones que desea entrar 
-                case 0://encaso de si desea salir del menu electrodomestico para regresar al menu principal
-                   break;
-                case 1:
-                    GeneralDefecto();//llama a la funcion del tipo de electrodomestico por defecto
-                    break;
-                case 2: 
-                    PrecioCaseYPeso();// llama a la funcion 
-                    break;
-                case 3:
-                    TodoGeneral(); //llama a la clase
-                    break;
-                default:////encaso de si desea salir del menu o terminar el programa
-                    System.out.println("No esta dentros de las opciones...\n"
-                            + "Intenta de nuevo\n");                    
-            }
-        }
-    }
-    public void GeneralDefecto(){//llama a la clase para que imprima el medoto 
-        Electrodomestico electrodomestico =  new Electrodomestico(); 
-        electrodomestico.ImprimirDefecto();
-    }
-    public void PrecioCaseYPeso(){//funcion en la que va pedir los valores
-        double precioBase;//variables globales dentro d ela funcion
-        double peso;
-        System.out.println("Ingrese valor del Precio: ");// lo que va solicitar
-        precioBase = entrada.nextDouble();//donde de va guardar el valor ingresado 
-        System.out.println("Ingrese valor del Peso: ");// lo que va solicitar
-        peso = entrada.nextDouble();//donde de va guardar el valor ingresado         
-        Electrodomestico electrodomestico =  new Electrodomestico(precioBase,peso);//va enviar los valores a ala clase
-        electrodomestico.ImprimirPrecioPeso();//llama al metodo de la clase llamda
-    }
-    public void TodoGeneral(){//clase que va solitar los valores
-        double precioBase;// variables globales
-        double peso;
-        char consumoEnergetico;
-        String color;
-        System.out.println("Ingrese valor del Precio: ");// lo que va solicitar
-        precioBase = entrada.nextDouble();//donde de va guardar el valor ingresado 
-        System.out.println("Ingrese valor del Peso: ");// lo que va solicitar
-        peso = entrada.nextDouble();  //donde de va guardar el valor ingresado 
-        System.out.println("Ingrese la letra del Consumo: ");// lo que va solicitar
-        consumoEnergetico = entrada.next().charAt(0);//donde de va guardar el valor ingresado 
-        System.out.println("Ingrese el color:");// lo que va solicitar
-        color = entrada.next();//donde de va guardar el valor ingresado 
-        Electrodomestico electrodomestico =  new Electrodomestico(precioBase,peso,consumoEnergetico,color);//va enviar los valores a ala clase
-        electrodomestico.ImprmirTodo();//llama al metodo de la clase llamda
-    }
-  
-    public void MenuLavadora(){// menu principal para seleccionar del lavadora que desee
-        int desicion = -1;//se inicia el while el cual permite estar en el menu
-        while(desicion !=0){
+        
+     }
+        
+    
+ 
+    public void MenuLavadora(){//este es el menu de lavadore que hace el llamado a eso metodos
+        char seguir;
+        do{
+            int desicion;//opciones
             System.out.println("Menu Lavadora \n Elige una Opcion");
             System.out.println("1. Por Defecto \n2. Precio Base Y Peso"
-                    + " \n3. Precio Bese, Peso, Consumo Energetico Y Color \n0. Salir ");
+                    + " \n3. Precio Bese, Peso, Consumo Energetico Y Color");
             desicion = entrada.nextInt();
-            switch(desicion){//un swicht para las opciones que desea entrar
-                case 0://opcion para salir
-                   break;
-                case 1://opcion para llamar a la funcion
-                    lavadoraDefecto();
-                    break;
-                case 2: //opcion para llamar a la funcion
-                    lavadorapesoyprecio();
-                    break;
-                case 3://opcion para llamar a la funcion
-                    lavadoratodo();                            
-                    break;
-                default://en caso de no ingrasar un opcion de las que pedi
-                    System.out.println("No esta dentros de las opciones...\n"
-                            + "Intenta de nuevo\n");                    
+            if(desicion==1){// dependiendo del tipo de opcion que escoja
+                lavadoraDefecto();
+            }if(desicion==2){
+                lavadorapesoyprecio();
+            }if(desicion==3){
+                lavadoratodo(); 
+            }if(desicion>3){//en caso de no ingresar una opcion correcta
+                eletro = null;
+                System.out.println("No esta dentro de las opciones...");
             }
-        }
+        System.out.println("Desea Contuniar en el Menu Lavadora Si (S) o No (N): ");//do while para saber si desea continuar en la opciones
+            seguir = entrada.next().charAt(0);// donde se guarda la opcion de si o no
+        }while((seguir == 'S'|| seguir == 's'));//si desea continuar vuelve al menu de nuevo de lavadora
     }
-    public void lavadoraDefecto(){//se llama a la clase para que llame al metodo imprimir
-        Lavadora lavadora = new Lavadora();
-        lavadora.ImprimirDefectolavadora();
+    
+    public void lavadoraDefecto(){//valores por defecto
+        eletro = new Lavadora();
+        ((Lavadora) eletro).ImprimirDefectolavadora();// imprime los datos
+       
     }
-    public void lavadorapesoyprecio(){//valores que pide
-        double precioBase;//varibles globales de esta funcion
+    
+    public void lavadorapesoyprecio(){//valores que pide y que tan ya por defecto
+        double precioBase;
         double peso;
-        System.out.println("Ingrese valor del Precio: ");//lo que va pedir 
-        precioBase = entrada.nextDouble();//donde se va a guardar
-        System.out.println("Ingrese valor del Peso: ");//lo que va pedir 
-        peso = entrada.nextDouble();  //donde se va a guardar
-        Lavadora lavadora = new Lavadora(precioBase, peso);//envia los valores a la clase 
-        lavadora.ImprimirPrecioPesolavadora();//llama al metodo de la clase llamada
+        System.out.println("Ingrese valor del Precio: ");
+        precioBase = entrada.nextDouble();// lee el precio
+        System.out.println("Ingrese valor del Peso: ");
+        peso = entrada.nextDouble();  // lee el peso
+        eletro = new Lavadora(precioBase, peso);
+       ((Lavadora) eletro).ImprimirPrecioPesolavadora();// imrpime los datos       
     }
-    public void lavadoratodo(){//donde va pedir todo los valores
-        double precioBase;// variables
+    
+    public void lavadoratodo(){//pide todos los valores
+        double precioBase;
         double peso;
         char consumoEnergetico;
         String color;
         int carga;
-        System.out.println("Ingrese valor del Precio: ");//lo que va pedir 
-        precioBase = entrada.nextDouble();//donde se va a guardar
-        System.out.println("Ingrese valor del Peso: ");//lo que va pedir 
-        peso = entrada.nextDouble();  //donde se va a guardar
-        System.out.println("Ingrese la letra del Consumo: ");//lo que va pedir 
-        consumoEnergetico = entrada.next().charAt(0);//donde se va a guardar
-        System.out.println("Ingrese el color:");//lo que va pedir 
-        color = entrada.next();//donde se va a guardar
-        System.out.println("Ingrese Valor carga: ");//lo que va pedir 
-        carga = entrada.nextInt();//donde se va a guardar
-        Lavadora lavadora = new Lavadora(precioBase,peso,consumoEnergetico,color,carga);//envia los valores a la clase 
-        lavadora.ImprmirTodolavadora();//llama al metodo de la clase llamada
+        System.out.println("Ingrese valor del Precio: ");//lo que se pide por pantalla
+        precioBase = entrada.nextDouble();// guarda
+        System.out.println("Ingrese valor del Peso: ");//lo que se pide por pantalla
+        peso = entrada.nextDouble();  // guarda
+        System.out.println("Ingrese la letra del Consumo: ");
+        consumoEnergetico = entrada.next().charAt(0);// guarda
+        System.out.println("Ingrese el color:");//lo que se pide por pantalla
+        color = entrada.next();// guarda
+        System.out.println("Ingrese Valor carga: ");//lo que se pide por pantalla
+        carga = entrada.nextInt();//guarda
+        eletro = new Lavadora(precioBase,peso,consumoEnergetico,color,carga);//envia los valores a la clase
+        ((Lavadora) eletro).ImprmirTodolavadora();// imrpime los datos   
+       
     }
     
-    public void MenuTelevisor(){// menu principal para seleccionar del televisor que desee
-        int desicion = -1;//se inicia el while el cual permite estar en el menu
-        while(desicion !=0){
+   
+    public void MenuTelevisor(){
+        char seguir;
+        do{
+            int desicion;
             System.out.println("Menu Televisor \n Elige una Opcion");
             System.out.println("1. Por Defecto \n2. Precio Base Y Peso"
-                    + " \n3. Precio Bese, Peso, Consumo Energetico Y Color \n0. Salir ");
+                    + " \n3. Precio Bese, Peso, Consumo Energetico Y Color \n");
             desicion = entrada.nextInt();
-            switch(desicion){//un swicht para las opciones que desea entrar
-                case 0://opcion para salir
-                   break;
-                case 1://opcion para llamar a la funcion
-                    televisorGeneral();
-                    break;
-                case 2: //opcion para llamar a la funcion
-                    televsorpesoyprecio();
-                    break;
-                case 3: //opcion para llamar a la funcion
-                    televisortodo();                                            
-                    break;
-                default://opcion no valida
-                    System.out.println("No esta dentros de las opciones...\n"
-                            + "Intenta de nuevo\n");                    
+            if( desicion == 1){
+                televisorGeneral();//llama al metodo defecto del televisor
+            }if(desicion ==2){
+                televsorpesoyprecio();// llama metodo del televisor
+            }if (desicion==3){
+                televisortodo(); // llama metodo del televisor
+            }if(desicion>3){
+                eletro=null;
+                System.out.println("No esta dentro de las opciones...");
             }
-        }
+        System.out.println("Desea Contuniar en el Menu Televisor Si (S) o No (N): ");
+            seguir = entrada.next().charAt(0);
+        }while((seguir == 'S'|| seguir == 's'));
     }
-    public void televisorGeneral(){// menu principal para seleccionar del televisor que desee
-        Televisor televisor = new Televisor();// llamada de  laclase
-        televisor.imprimir();//llamado del metodo de se calse
+    
+    public void televisorGeneral(){
+        eletro = new Televisor();
+        ((Televisor)eletro).imprimir();// imprime los datos
+       
     }
-    public void televsorpesoyprecio(){//valores que va pedir 
-        double precioBase;//variables
+    
+    public void televsorpesoyprecio(){
+        double precioBase;
         double peso;
-        System.out.println("Ingrese valor del Precio: ");//lo que va pedir 
-        precioBase = entrada.nextDouble();//donde se va a guardar
-        System.out.println("Ingrese valor del Peso: ");//lo que va pedir 
-        peso = entrada.nextDouble();//donde se va a guardar
-        Televisor televisor = new Televisor(precioBase, peso);  //envia los valores a la clase 
-        televisor.imprimir2();// llama al metodo de la clase 
+        System.out.println("Ingrese valor del Precio: ");//lo que se pide por pantalla
+        precioBase = entrada.nextDouble();// guarda
+        System.out.println("Ingrese valor del Peso: ");//lo que se pide por pantalla
+        peso = entrada.nextDouble();//guarda
+        eletro= new Televisor(precioBase, peso);  //envia los datos a la clase
+        ((Televisor)eletro).imprimir2();// imprime      
     }
-    public void televisortodo(){// va pedir todos lo valores que va enviar a la clase
-        double precioBase;// variables
+    
+    public void televisortodo(){
+        double precioBase;
         double peso;
         char consumoEnergetico;
         String color;
         int resolucion;
         boolean sintonizadorTDT;
-        System.out.println("Ingrese valor del Precio: ");// lo que va pedir
-        precioBase = entrada.nextDouble();//donde se va a guardar
-        System.out.println("Ingrese valor del Peso: ");// lo que va pedir
-        peso = entrada.nextDouble();//donde se va a guardar  
-        System.out.println("Ingrese la letra del Consumo: ");// lo que va pedir
-        consumoEnergetico = entrada.next().charAt(0);//donde se va a guardar
-        System.out.println("Ingrese el color:");// lo que va pedir
-        color = entrada.next();//donde se va a guardar
-        System.out.println("Ingrese El valor de la Resolucion: ");// lo que va pedir
-        resolucion = entrada.nextInt();//donde se va a guardar
-        System.out.println("Sintonizador TDT:");// lo que va pedir
-        sintonizadorTDT = entrada.nextBoolean();//donde se va a guardar
-        Televisor televisor = new Televisor(precioBase, peso,consumoEnergetico,color,resolucion,sintonizadorTDT);//envia los valores a la clase 
-        televisor.imprimir3();//llama al metodo de la clase 
+        System.out.println("Ingrese valor del Precio: ");//lo que se pide por pantalla
+        precioBase = entrada.nextDouble();//guarda
+        System.out.println("Ingrese valor del Peso: ");//lo que se pide por pantalla
+        peso = entrada.nextDouble();  // guarda
+        System.out.println("Ingrese la letra del Consumo: ");//lo que se pide por pantalla
+        consumoEnergetico = entrada.next().charAt(0);// guarda
+        System.out.println("Ingrese el color:");//lo que se pide por pantalla
+        color = entrada.next();//guarda
+        System.out.println("Ingrese El valor de la Resolucion: ");//lo que se pide por pantalla
+        resolucion = entrada.nextInt();// guardar
+        System.out.println("Sintonizador TDT:");//lo que se pide por pantalla
+        sintonizadorTDT = entrada.nextBoolean();//guarda
+        eletro = new Televisor(precioBase, peso,consumoEnergetico,color,resolucion,sintonizadorTDT);
+        ((Televisor)eletro).imprimir3();// imprime 
+   
         
     }
-    
     
 }

@@ -10,50 +10,52 @@ package empresa.de.eletrodomesticos;
  * @author Albert Charry, Jorge Andres Duran
  */
 public class Lavadora extends Electrodomestico {//clase hija
-     private final static int CargaDefecto=5;//varible estatica
-    private int carga;// variable global
-    //se terno el valor
-    public int getCarga() {
+    private final static int CargaDefecto=5; // varible estatica
+    private int carga;// variable pedida
+    
+    
+    public int getCarga() {//para retonar
         return carga;
     }
-    
-    public double precioFinal(){// se calcula el precio total        
-        double plus=super.precioFinal();  
-        if (carga>30){// hace la comparacion y asignacion
+   
+    public double precioFinal(){        
+        double plus=super.precioFinal();  // se llama el precio final del padre
+        if (carga>30){// siempre y cunado caragga cumpla con la condicion
             plus+=50;
         }  
-        return plus;// se retorna el valor 
+        return plus;// se retorna
     }
-    
-    public Lavadora(){// por defecto
+    public Lavadora(){    // contructor 
+
         this(PrecioBaseDefecto, PesoDefecto, ConsumoEnergeticoDefecto, ColorDefecto, CargaDefecto);
         
     }
-    
-    public Lavadora(double precioBase, double peso){//se envia los valores y los valores por defecto
+    // contructor por defecto con varibles pedidas 
+    public Lavadora(double precioBase, double peso){
         this(precioBase, peso, ConsumoEnergeticoDefecto, ColorDefecto, CargaDefecto);
        
     }
-    
-    public Lavadora(double precioBase, double peso, char consumoEnergetico, String color, int carga){//se envia los valores
+    // contructor
+    public Lavadora(double precioBase, double peso, char consumoEnergetico, String color, int carga){
         super(precioBase,peso, consumoEnergetico,color);
         this.carga=carga;
         
     }
-    
-   public void ImprimirDefectolavadora(){// se imprime por defecto
-         System.out.println("Precio: "+PrecioBaseDefecto +"\nPeso: "+ PesoDefecto
+    // imprime los datos por defecto
+    public void ImprimirDefectolavadora(){
+        System.out.println("Precio: "+PrecioBaseDefecto +"\nPeso: "+ PesoDefecto
                 +"\nConsumo: "+ConsumoEnergeticoDefecto+"\nColor "
                 +  ColorDefecto+"\nCarga:"+CargaDefecto);
     }
-    
-    public void ImprimirPrecioPesolavadora(){//impreme
+    // imprime 
+    public void ImprimirPrecioPesolavadora(){
         System.out.println("Precio: "+ precioBase+"\nPeso: "+peso+"\nConsumo: "
                 + ConsumoEnergeticoDefecto+"\nColor "+ColorDefecto+"\nCarga:"+CargaDefecto);
     }
-    
-    public void ImprmirTodolavadora(){//imprime
+    // imprime todo 
+    public void ImprmirTodolavadora(){
         System.out.println("Precio: "+ precioBase+"\nPeso: "+peso+"\nConsumo: "
                 +consumoEnergetico+"\nColor:"+color+"\n Carga:"+carga);
     }
+    
 }

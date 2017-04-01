@@ -14,6 +14,6 @@ public class Main {
         // TODO code application logic here
         Ejecutable menu1 = new Ejecutable();
         menu1.Menu();//se llama la clase padre
-        
+   
     }
 }
